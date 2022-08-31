@@ -1,0 +1,48 @@
+# Deployment for a sample golang app
+# This also includes a ClusterIP service to ensure we're able to access the pod within the cluster
+# without depending on the Pod IP that changes on recreation.
+
+# To test the connection, run an adhoc pod using kubectl run and try to curl with the IP of the ClusterIP service.
+# kubectl run test-sample-app --image=nginx -n sample-go-app
+# kubectl exec -it test-sample-app -n sample-go-app -- curl -v <SVC_IP>
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sample-go-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-go-app
+  namespace: sample-go-app
+  labels:
+    app: sample-go-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sample-go-app
+  template:
+    metadata:
+      labels:
+        app: sample-go-app
+    spec:
+      containers:
+      - name: sample-go-app
+        image: sbaghel/sample-go-app
+        ports:
+        - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sample-go-app
+  namespace: sample-go-app
+spec:
+  selector:
+    app: sample-go-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
