@@ -1,3 +1,6 @@
+# This workflow will get triggered when commit is pushed in an branch in the repository.
+# We're using Dockerhub access token instead of username, password for security purpose (recommended by docker). 
+
 name: learn-github-actions
 
 on: [push]
@@ -8,6 +11,7 @@ env:
 
 jobs:
   build-and-push:
+    name: "Build and Push the docker image to DockerHub"
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout the repo"
@@ -19,5 +23,5 @@ jobs:
           password: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
       - name: "Build the docker image"
         run: docker image build -t $DOCKERHUB_USERNAME/$DOCKERHUB_REPOSITORY:latest .
-      - name: "Push the docker image to the dockerhub repo"
+      - name: "Push the docker image to the DockerHub repo"
         run: docker image push $DOCKERHUB_USERNAME/$DOCKERHUB_REPOSITORY:latest
