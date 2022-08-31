@@ -28,8 +28,8 @@ import (
 )
 
 var (
-	masterPool *simpleredis.ConnectionPool
-	replicaPool  *simpleredis.ConnectionPool
+	masterPool  *simpleredis.ConnectionPool
+	replicaPool *simpleredis.ConnectionPool
 )
 
 func ListRangeHandler(rw http.ResponseWriter, req *http.Request) {

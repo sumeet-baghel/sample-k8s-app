@@ -1,11 +1,19 @@
 name: learn-github-actions
+
 on: [push]
+
+env:
+  DOCKERHUB_USERNAME:   ${{ secrets.DOCKERHUB_USERNAME }}
+  DOCKERHUB_TOKEN:      ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
+  DOCKERHUB_REPOSITORY: ${{ secrets.DOCKERHUB_REPO}}
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - run: |
-            cd guestbook-go
-            docker image build -t sbaghel/sample-go-app:latest .
-      - run: docker image push sbaghel/sample-go-app:latest
+      - name: "Checkout the repo"
+        uses: actions/checkout@v3
+      - name: "Build the docker image"
+        run: docker image build -t $DOCKERHUB_USERNAME/$DOCKERHUB_REPOSITORY:latest .
+      - name: "Push the docker image to the dockerhub repo"
+        run: docker image push $DOCKERHUB_USERNAME/$DOCKERHUB_REPOSITORY:latest
