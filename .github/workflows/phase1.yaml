@@ -4,7 +4,10 @@
 
 name: learn-github-actions
 
-on: [push]
+on:
+  push:
+    branches:
+      - sbaghel_phase1
 
 env:
   DOCKERHUB_USERNAME:   ${{ secrets.DOCKERHUB_USERNAME }}
