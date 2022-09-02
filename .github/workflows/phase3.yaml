@@ -1,0 +1,25 @@
+# This workflow will only get triggered if something is merged to the "main" branch or
+# a commit message includes "BUILD_CONTAINER_IMAGE" on any branch.
+# NOTE: We're only building the image in this workflow
+# This can be extended to building container image on any branch 
+# and pushing the image to DockerHub repo if something is merged to the "main" branch 
+
+name: selective-build
+
+on: [push]
+
+env:
+  DOCKERHUB_USERNAME:   ${{ secrets.DOCKERHUB_USERNAME }}
+  DOCKERHUB_REPOSITORY: ${{ secrets.DOCKERHUB_REPO}}
+
+jobs:
+  build:
+    name: "Build the docker image"
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || contains(github.event.head_commit.message, 'BUILD_CONTAINER_IMAGE')
+    steps:
+      - name: "Checkout the repo"
+        uses: actions/checkout@v3
+      - name: "Build the docker image"
+        # Using latest tag for simplicity
+        run: docker image build -t $DOCKERHUB_USERNAME/$DOCKERHUB_REPOSITORY:latest .
