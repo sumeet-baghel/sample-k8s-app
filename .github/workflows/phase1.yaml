@@ -1,5 +1,5 @@
-# This workflow will get triggered when commit is pushed in an branch in the repository.
-# We're using Dockerhub access token instead of username, password for security purpose (recommended by docker) to push the image.
+# This workflow will get triggered when commit is pushed in a specific branch.
+# I'm using using Dockerhub access token instead of username, password for security purpose (recommended by docker) to push the image.
 # In a real env, it would be good to use docker layer caching depending on the pricing.
 
 name: learn-github-actions
