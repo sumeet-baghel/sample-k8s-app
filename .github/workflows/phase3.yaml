@@ -1,6 +1,6 @@
 # This workflow will only get triggered if something is merged to the "main" branch or
 # a commit message includes "BUILD_CONTAINER_IMAGE" on any branch.
-# NOTE: We're only building the image in this workflow
+# NOTE: I'm only building the image in this workflow
 # This can be extended to building container image on any branch 
 # and pushing the image to DockerHub repo if something is merged to the "main" branch 
 
